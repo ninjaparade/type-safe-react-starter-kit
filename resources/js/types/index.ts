@@ -1,13 +1,14 @@
-import { LucideIcon } from 'lucide-react';
-
-export interface Auth {
-    user: User;
-}
+import { type LucideIcon } from 'lucide-react';
 
 export interface BreadcrumbItem {
     title: string;
     href: string;
 }
+// used later
+// interface Metadata {
+//     title: string;
+//     breadcrumbs: BreadcrumbItem[];
+// }
 
 export interface NavGroup {
     title: string;
@@ -17,24 +18,8 @@ export interface NavGroup {
 export interface NavItem {
     title: string;
     url: string;
-    icon?: LucideIcon | null;
+    icon?: LucideIcon;
     isActive?: boolean;
 }
 
-export interface SharedData {
-    name: string;
-    quote: { message: string; author: string };
-    auth: Auth;
-    [key: string]: unknown;
-}
-
-export interface User {
-    id: number;
-    name: string;
-    email: string;
-    avatar?: string;
-    email_verified_at: string | null;
-    created_at: string;
-    updated_at: string;
-    [key: string]: unknown; // This allows for additional properties...
-}
+export type PageProps<T extends Record<string, unknown> | unknown[] = Record<string, unknown> | unknown[]> = App.Data.InertiaSharedData & T;

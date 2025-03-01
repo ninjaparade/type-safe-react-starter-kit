@@ -1,5 +1,5 @@
 export function useInitials() {
-    const getInitials = (fullName: string): string => {
+    return (fullName: string): string => {
         const names = fullName.trim().split(' ');
 
         if (names.length === 0) return '';
@@ -10,6 +10,4 @@ export function useInitials() {
 
         return `${firstInitial}${lastInitial}`.toUpperCase();
     };
-
-    return getInitials;
 }

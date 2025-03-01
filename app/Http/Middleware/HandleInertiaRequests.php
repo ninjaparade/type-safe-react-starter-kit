@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Foundation\Inspiring;
+use App\Data\InertiaAppData;
+use App\Data\InertiaSharedData;
+use App\Data\UserData;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -31,20 +33,41 @@ class HandleInertiaRequests extends Middleware
      * Define the props that are shared by default.
      *
      * @see https://inertiajs.com/shared-data
-     *
-     * @return array<string, mixed>
      */
-    public function share(Request $request): array
+    public function share(Request $request): InertiaSharedData
     {
-        [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
+        return InertiaSharedData::from(
+            array_merge(
+                parent::share($request),
+                $this->authData($request),
+                $this->appData(),
+            )
+        );
+    }
+
+    private function authData(Request $request): array
+    {
+        if ($user = $request->user()) {
+
+            return [
+                'auth' => [
+                    'user' => UserData::from($user),
+
+                ],
+            ];
+        }
+
+        return ['auth' => null];
+    }
+
+    private function appData(): array
+    {
         return [
-            ...parent::share($request),
-            'name' => config('app.name'),
-            'quote' => ['message' => trim($message), 'author' => trim($author)],
-            'auth' => [
-                'user' => $request->user(),
-            ],
+            'appData' => InertiaAppData::from([
+                'name' => config('app.name'),
+                'version' => config(key: 'app.version'),
+            ]),
         ];
     }
 }
