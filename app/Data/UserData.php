@@ -13,6 +13,7 @@ class UserData extends Data
         public readonly string $id,
         public readonly string $name,
         public readonly string $first_name,
+        public readonly string $email,
         public readonly string $last_name,
         public readonly ?string $avatar,
         public readonly ?CarbonInterface $email_verified_at,

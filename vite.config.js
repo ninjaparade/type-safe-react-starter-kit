@@ -6,8 +6,8 @@ import { run } from 'vite-plugin-run';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.tsx'],
-            ssr: 'resources/js/ssr.jsx',
+            input: ['resources/css/app.css', 'resources/application/app.tsx'],
+            ssr: 'resources/application/ssr.jsx',
             refresh: true,
         }),
         react(),
@@ -27,7 +27,7 @@ export default defineConfig({
     },
     resolve: {
         alias: {
-            '@': '/resources/js',
+            '@': '/resources',
         },
     },
 });
